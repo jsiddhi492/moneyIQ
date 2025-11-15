@@ -22,7 +22,7 @@ public class IncomeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private long name;
+    private String name;
     private String icon;
     private LocalDate date;
     private BigDecimal amount;

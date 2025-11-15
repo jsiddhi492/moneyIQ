@@ -22,7 +22,7 @@ public class IncomeDTO {
    private BigDecimal amount;
    private LocalDate date;
    private LocalDateTime createdAt;
-   private LocalDateTime updateAt;
+   private LocalDateTime updatedAt;
 
 
 }

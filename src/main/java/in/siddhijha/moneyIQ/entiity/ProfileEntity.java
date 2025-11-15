@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 public class ProfileEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //used for auto-increment the id every time
-   private long id;
+   private Long id;
     @Column(unique = true)
    private String fullName;
    private String email;

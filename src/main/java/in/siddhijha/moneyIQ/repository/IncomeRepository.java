@@ -1,5 +1,6 @@
 package in.siddhijha.moneyIQ.repository;
 
+import in.siddhijha.moneyIQ.entiity.ExpenseEntity;
 import in.siddhijha.moneyIQ.entiity.IncomeEntity;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,7 +14,7 @@ import java.util.List;
 public interface IncomeRepository extends JpaRepository<IncomeEntity,Long> {
     List<IncomeEntity> findByProfileIdOrderByDateDesc(long profileId);
     List<IncomeEntity>findTop5ByProfileIdOrderByDateDesc(long profileId);
-    @Query("SELECT SUM(e.amount) FROM IncomeEntity e WHERE e.profile.id= :profileId")
+    @Query("SELECT SUM(i.amount) FROM IncomeEntity i WHERE i.profile.id= :profileId")
     BigDecimal findTotalExpenseByProfileId(@Param("profileId") Long profileId);
     //select* from tbl_incomes where profile_id=?1 and date between start and end date and name like %keyword%
     List<IncomeEntity> findByProfileIdAndDateBetweenAndNameContainingIgnoreCase(
@@ -23,4 +24,6 @@ public interface IncomeRepository extends JpaRepository<IncomeEntity,Long> {
             String keyword,
             Sort sort
     );
+    List<IncomeEntity> findByProfileIdAndDateBetween(Long profileId, LocalDate startDate, LocalDate endDate);
+
 }
