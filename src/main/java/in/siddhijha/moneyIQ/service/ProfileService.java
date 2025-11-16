@@ -6,6 +6,7 @@ import in.siddhijha.moneyIQ.entiity.ProfileEntity;
 import in.siddhijha.moneyIQ.repository.ProfileRepository;
 import in.siddhijha.moneyIQ.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailParseException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -26,6 +27,8 @@ private final EmailService emailService;
 private final PasswordEncoder passwordEncoder;
 private final AuthenticationManager authenticationManager;
 private final JwtUtil jwtUtil;
+@Value("${app.activation.url}")
+private String activationURL;
 //data coming from api - profileDTO
 //CONVERTS IT into database format and then again in dto
 public ProfileDTO registerProfile(ProfileDTO profileDTO){
@@ -34,7 +37,7 @@ public ProfileDTO registerProfile(ProfileDTO profileDTO){
     newProfile.setActivationToken(UUID.randomUUID().toString());
     newProfile=profileRepository.save(newProfile);
     //send activation link
-    String activationLink="http://localhost:8080/api/v1.0/activate?token=" + newProfile.getActivationToken();
+    String activationLink=activationURL+"/api/v1.0/activate?token=" + newProfile.getActivationToken();
     String subject="Activate your moneyIQ account";
     String body="Click on the following link to activate your account: " + activationLink;
     emailService.sendEmail(newProfile.getEmail(),subject,body);
