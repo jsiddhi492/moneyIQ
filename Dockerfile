@@ -1,17 +1,5 @@
-# ---- Build Step ----
-FROM eclipse-temurin:21-jdk AS build
-WORKDIR /app
-
-COPY . .
-
-RUN chmod +x mvnw
-RUN ./mvnw clean package -DskipTests
-
-# ---- Run Step ----
 FROM eclipse-temurin:21-jre
 WORKDIR /app
-
-COPY --from=build /app/target/moneyIQ-0.0.1-SNAPSHOT.jar app.jar
-
+COPY target/moneyIQ-0.0.1-SNAPSHOT.jar moneyIQ-v1.0.jar
 EXPOSE 9090
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java" , "-jar" , "moneyIQ-v1.0.jar"]
