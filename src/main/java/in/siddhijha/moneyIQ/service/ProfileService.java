@@ -45,13 +45,10 @@ public ProfileDTO registerProfile(ProfileDTO profileDTO){
 }
     public ProfileEntity toEntity(ProfileDTO profileDTO) {
         return ProfileEntity.builder()
-                .id(profileDTO.getId())
                 .fullName(profileDTO.getFullName())
                 .email(profileDTO.getEmail())
                 .password(passwordEncoder.encode(profileDTO.getPassword()))
                 .profileImageUrl(profileDTO.getProfileImageUrl())
-                .createdAt(profileDTO.getCreatedAt())
-                .updatedAt(profileDTO.getUpdatedAt())
                 .build();
     }
 
