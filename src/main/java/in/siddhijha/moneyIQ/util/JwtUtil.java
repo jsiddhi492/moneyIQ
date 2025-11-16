@@ -24,18 +24,18 @@ public class JwtUtil {
         return Keys.hmacShaKeyFor(secretKey.getBytes());
     }
 
-    // ✅ Extract username/email from token
+    //  Extract username/email from token
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
 
-    // ✅ Extract a specific claim
+    //  Extract a specific claim
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
     }
 
-    // ✅ Read all claims from token
+    // Read all claims from token
     private Claims extractAllClaims(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(getSigningKey())
@@ -44,7 +44,7 @@ public class JwtUtil {
                 .getBody();
     }
 
-    // ✅ Check if token has expired
+    //  Check if token has expired
     private Boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
@@ -53,7 +53,7 @@ public class JwtUtil {
         return extractClaim(token, Claims::getExpiration);
     }
 
-    // ✅ Generate new token
+    //  Generate new token
     public String generateToken(String username) {
         return Jwts.builder()
                 .setSubject(username)                     // stores email
@@ -63,7 +63,7 @@ public class JwtUtil {
                 .compact();
     }
 
-    // ✅ Validate token
+    //  Validate token
     public Boolean validateToken(String token, String username) {
         final String extractedUsername = extractUsername(token);
         return (extractedUsername.equals(username) && !isTokenExpired(token));
